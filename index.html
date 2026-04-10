@@ -28,14 +28,19 @@
             <h1>BRM Radio - Manada Flow</h1>
              <div class="player-section">
                     <h2 style="text-align: center; margin-bottom: 20px;">🎧 Reproductor Live</h2>
-                        <h3 style="text-align: center; margin-bottom: 20px;">DESPLAZATE Y DALE A PLAY ;)</h2>
-                           <audio id="player" controls preload="metadata">
-                                <source src="https://bubatronik.radiostream321.com/" type="audio/mpeg">
-                           </audio>                 
+                        <h3 style="text-align: center; margin-bottom: 20px;">DESPLAZATE Y DALE A PLAY ;)</h2>             
                         <iframe src="https://bubatronik.radiostream321.com/" width="1069" height="306"></iframe>
-                         <audio controls crossorigin="anonymous" preload="metadata">
-                              <source src="http://uk23freenew.listen2myradio.com:25884/live.mp3" type="audio/mpeg">
-                         </audio>
+                   <h2>🎧 BRM Live Player</h2>
+                      <audio controls 
+                             crossorigin="anonymous" 
+                             preload="metadata"
+                             style="width:100%; height:70px; border-radius:15px;">
+                        <source src="http://uk23freenew.listen2myradio.com:25884/live.mp3" type="audio/mpeg">
+                        <source src="http://uk23freenew.listen2myradio.com:25884/stream.mp3" type="audio/mpeg">
+                        Stream no disponible - activa Mixxx.
+                      </audio>
+                      <p style="text-align:center; opacity:0.8;">Mixxx live → 🔴 LIVE | Pausa → ⏸️</p>
+                 
                    <script>
                         const player = document.getElementById('player');
                         const status = document.getElementById('status');
@@ -68,6 +73,7 @@
                         // Mobile: play on user touch
                         document.addEventListener('touchstart', () => player.play().catch(() => {}), {once: true});
                     </script>
+                 
                     <div id="status" class="status">SI NO SUENA = 🔴 Desconectado - Transmitiendo cuando activo</div>
               </div>
         
@@ -107,6 +113,18 @@
         setInterval(() => {
             if (audio.paused && !audio.ended) audio.play().catch(() => {});
         }, 30000);
+    </script>
+    <script>
+        const player = document.querySelector('audio');
+        player.addEventListener('loadstart', () => console.log('Conectando...'));
+        player.addEventListener('playing', () => {
+          document.querySelector('.status')?.style.color = '#00ff88';
+        });
+        player.addEventListener('error', e => {
+          console.log('Stream error:', e);
+          player.src = 'http://uk19freenew.listen2myradio.com:38276/stream.mp3'; // retry
+        });
+        player.play().catch(() => {}); // autoplay mobile
     </script>
 </body>
 </html>
