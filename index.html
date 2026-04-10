@@ -29,49 +29,10 @@
              <div class="player-section">
                     <h2 style="text-align: center; margin-bottom: 20px;">🎧 Reproductor Live</h2>
                         <h3 style="text-align: center; margin-bottom: 20px;">DESPLAZATE Y DALE A PLAY ;)</h2>
-                             <div class="jplayerLeft clearfix">
-                        	    <div style="display:none" id="urladdress">
-                        			https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_25884_stream_421546522		</div>
-                        	      <div style="display:none" id="stream_type">audio</div>		
-                        		            <div id="jp_container_1" class="jp-video jp-video-270p jp-state-playing">
-                                      <div class="jp-type-playlist">
-                                        <div class="jp-gui">
-                                          <div class="jp-video-play" style="display: none;"> <a href="javascript:;" class="jp-video-play-icon" tabindex="1">play</a> </div>
-                                          <div class="jp-interface clearfix">
-                                            <div class="jp-controls-holder clearfix">
-                                              <ul class="jp-controls">
-                                                <li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
-                                                <li><a href="javascript:;" class="jp-play" tabindex="1" style="display: none;">play</a></li>
-                                                <li><a href="javascript:;" class="jp-pause" tabindex="1" style="display: block;">pause</a></li>
-                                                <li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
-                                                <!--<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>-->
-                                                <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume" style="display: inline;">max volume</a></li>
-                                              </ul>
-                                              <div class="progresRight clearfix">
-                                                <div id="jquery_jplayer_1" class="jp-jplayer" style="width: 0px; height: 0px;"><img id="jp_poster_0" style="width: 0px; height: 0px; display: none;"><audio id="jp_audio_0" preload="metadata" src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_25884_stream_421546522"></audio></div>
-                                                <div class="player_title_outer">
-                                                  <div class="title_radio">
-                                                    <label>Error has Occuered</label>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <div class="rightSattings clearfix">
-                                                <div class="muteOuter clearfix"> <a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a> <a class="listingIcon" href="#"></a> <a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute" style="display: none;">unmute</a>
-                                                  <div class="jp-volume-bar">
-                                                    <div class="jp-volume-bar-value" style="width: 96.9965%;"></div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div class="jp-playlist visibl_none">
-                                          <ul style="display: block;"><li class="jp-playlist-current"><div><a href="javascript:;" class="jp-playlist-item-remove" style="display: none;">×</a><a href="javascript:;" class="jp-playlist-item jp-playlist-current" tabindex="0">undefined</a></div></li></ul>
-                                        </div>
-                                      </div>
-                                    </div>
-                		        </div>
-                                <iframe src="https://bubatronik.radiostream321.com/" width="1069" height="306"></iframe>
+                           <audio id="player" controls preload="metadata">
+                                <source src="https://bubatronik.radiostream321.com/" type="audio/mpeg">
+                           </audio>                 
+                        <iframe src="https://bubatronik.radiostream321.com/" width="1069" height="306"></iframe>
                    <script>
                         const player = document.getElementById('player');
                         const status = document.getElementById('status');
