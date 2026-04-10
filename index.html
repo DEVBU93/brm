@@ -26,11 +26,15 @@
 <body>
     <div class="container">
             <h1>BRM Radio - Manada Flow</h1>
+
+             <div class="player-section">
+                    <h2 style="text-align: center; margin-bottom: 20px;">🎧 Reproductor Live</h2>
              <audio id="player" controls preload="metadata">
                 <source src="https://bubatronik.radiostream123.com/" type="audio/mpeg">
               </audio>
               <p id="status">Conectado</p>
               <button onclick="toggle()">Play/Pausa</button>
+              <iframe src="https://bubatronik.radiostream321.com/" width="300" height="100"></iframe>
               <script>
                 const player = document.getElementById('player');
                 const status = document.getElementById('status');
@@ -63,6 +67,10 @@
                 // Mobile: play on user touch
                 document.addEventListener('touchstart', () => player.play().catch(() => {}), {once: true});
               </script>
+                   <audio controls autoplay src="https://bubatronik.radiostream321.com/"></audio>
+                    <p>Stream: Bubatronik live | Fallback: <a href="https://bubatronik.radiostream321.com/">Directo</a></p>
+                    <div id="status" class="status">🔴 Desconectado - Transmitiendo cuando activo</div>
+              </div>
         
             <div class="card">
                 <h3>📍 Ubicación</h3>
