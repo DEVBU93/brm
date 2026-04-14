@@ -732,7 +732,7 @@
                     <div class="artwork-bottom">
                       <div class="now-playing-label">▶ SONANDO AHORA / LINK ARRIBA</div>
                       <div class="now-playing-title" id="npTitle">Cargando playlist...</div>
-                      <div class="now-playing-num" id="npNum"># · BRM RADIO</div>
+                      <div class="now-playing-num" id="npNum"># · BUBATRONIK_BRM RADIO</div>
                     </div>
                     <div class="artwork-dots" id="artDots"></div>
               </div>
@@ -803,7 +803,7 @@
                       ▶ ABRIR EN DRIVE
                     </a>
                     <div class="video-sub">🌐 Stream</div>
-                    <div class="video-sub"> Se admiten canciones: pilla la playlist de Bubatronik y mete tu tema: 
+                    <div class="video-sub"> Se admiten canciones: pilla la playlist de BUBATRONIK_BRM y mete tu tema: 
                         <a class="video-link" href="https://www.youtube.com/playlist?list=PLUVib7eIEoIoKcgL0pXThJRzqb6VLwcs5"target="_blank" 
                                style="color: #ff00ff; font-weight: bold;">PLAYLIST YT</a>
                     </div>
@@ -836,7 +836,7 @@
          
               <!-- MINI ARTWORK GRID -->
               <div class="mini-art-grid">
-                <h3>ARTWORK BRM</h3>
+                <h3>ARTWORK BUBATRONIK_BRM</h3>
                 <div class="mini-grid" id="miniGrid">
                   <!-- JS fills -->
                 </div>
@@ -882,14 +882,14 @@
             </div>
             <div>
                 <h3>⚡ Géneros</h3>
-                <p>VARIOS<br>Bubatronik</p>
+                <p>VARIOS<br>BUBATRONIK_BRM</p>
             </div>
             <div>
               <a href="mailto:rubenrodriguez.f.93@gmail.com">📧 Email</a>
               <a href="https://www.instagram.com/bubatronik_brm/">🚀 @bubatronik_brm</a>
               <a href="https://bubatronik.radiostream321.com/" target="_blank">🌐 Listen2MyRadio (Web directo)</a>
               <a href="#" onclick="navigator.share({title:'BRM_Bubatronik',url:window.location.href})">📱 Compartir</a>  
-              <a href="https://drive.google.com/drive/folders/1XjSOxAVIAXA3R6qkOi3Uv_5rSdG5rLO0" target="_blank">DRIVE BRM_</a>
+              <a href="https://drive.google.com/drive/folders/1XjSOxAVIAXA3R6qkOi3Uv_5rSdG5rLO0" target="_blank">DRIVE BUBATRONIK_BRM</a>
               &nbsp;·&nbsp;
               <a href="https://worldmos.world" target="_blank">WORLDMOS</a>
               &nbsp;·&nbsp;
@@ -983,7 +983,7 @@
         IMG_IDS.forEach((id,i)=>{
           const slide=document.createElement('div');
           slide.className='artwork-slide'+(i===0?' active':'');
-          slide.innerHTML=`<img src="${thumb(id,800)}" alt="BRM Art ${i+1}" loading="${i===0?'eager':'lazy'}">`;
+          slide.innerHTML=`<img src="${thumb(id,800)}" alt="BUBATRONIK_BRM Art ${i+1}" loading="${i===0?'eager':'lazy'}">`;
           wrap.insertBefore(slide,wrap.querySelector('.artwork-overlay'));
           const dot=document.createElement('button');
           if(i===0)dot.className='active';
@@ -1004,7 +1004,7 @@
           // Sync now-playing
           const t=TRACKS[Math.floor(Math.random()*TRACKS.length)];
           document.getElementById('npTitle').textContent=t.t;
-          document.getElementById('npNum').textContent=`#${t.n} · BRM RADIO`;
+          document.getElementById('npNum').textContent=`#${t.n} · BUBATRONIK_BRM RADIO`;
           document.getElementById('videoThumb').src=thumb(IMG_IDS[curSlide],600);
         }
         setInterval(()=>goSlide((curSlide+1)%IMG_IDS.length),6000);
@@ -1044,7 +1044,7 @@
               <div class="track-title">${track.t}</div>
               <div class="track-artist">${track.artist}</div>
             </div>
-            <div class="track-dur">BRM</div>
+            <div class="track-dur">BUBATRONIK_BRM</div>
           `;
           if(track.id){
             row.addEventListener('click',()=>{
@@ -1088,8 +1088,8 @@
         // INIT NOW PLAYING
         const first=TRACKS[0];
         document.getElementById('npTitle').textContent=first.t;
-        document.getElementById('npNum').textContent=`#${first.n} · BRM RADIO`;
-        document.getElementById('trackCount').textContent='200+';
+        document.getElementById('npNum').textContent=`#${first.n} · BUBATRONIK_BRM RADIO`;
+        document.getElementById('trackCount').textContent='1822+';
          
         // Rotate now playing every 30s
         let npIdx=0;
@@ -1099,7 +1099,7 @@
           document.getElementById('npTitle').style.opacity='0';
           setTimeout(()=>{
             document.getElementById('npTitle').textContent=t.t;
-            document.getElementById('npNum').textContent=`#${t.n} · BRM RADIO`;
+            document.getElementById('npNum').textContent=`#${t.n} · BUBATRONIK_BRM RADIO`;
             document.getElementById('npTitle').style.opacity='1';
           },400);
           // highlight in playlist
