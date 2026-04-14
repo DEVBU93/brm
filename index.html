@@ -1163,11 +1163,6 @@
 
      // Mobile: play on user touch
         document.addEventListener('touchstart', () => player.play().catch(() => {}), {once: true});
-    
-        audio.addEventListener('loadstart', () => status.textContent = '🟡 Conectando...');
-        audio.addEventListener('playing', () => status.textContent = '🟢 🔴 LIVE EN DIRECTO');
-        audio.addEventListener('pause', () => status.textContent = '⏸️ Pausado');
-        audio.addEventListener('error', () => status.textContent = '🔴 Error stream - Revisa Mixxx');
         
         // Auto-connect cada 30s si parado
         setInterval(() => {
