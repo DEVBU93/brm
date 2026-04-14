@@ -995,13 +995,14 @@
           return `https://drive.google.com/file/d/${id}/preview`;
         }
         // BUILD ARTWORK CAROUSEL
+        IMG_IDS.forEach((id,i)=>{
         const wrap=document.getElementById('artworkWrap');
         const dots=document.getElementById('artDots');
         const isVideo = VIDEO_IDS.has(id);
         const slide=document.createElement('div');
         const imgEl = slide.querySelector('img');
         const dot=document.createElement('button');
-        IMG_IDS.forEach((id,i)=>{
+
           slide.className='artwork-slide'+(i===0?' active':'');
           slide.innerHTML=`
             <img
