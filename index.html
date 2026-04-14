@@ -1057,6 +1057,7 @@
             }
           }
         setInterval(()=>goSlide((curSlide+1)%IMG_IDS.length),6000);
+        if(frame) frame.src = VIDEO_IDS.has(IMG_IDS[curSlide]) ? drivePreview(IMG_IDS[curSlide]) : '';
         } 
         // MINI GRID
         const mg=document.getElementById('miniGrid');
