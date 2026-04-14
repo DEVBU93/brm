@@ -1168,15 +1168,6 @@
         setInterval(() => {
             if (audio.paused && !audio.ended) audio.play().catch(() => {});
         }, 30000);
-
-        player.addEventListener('loadstart', () => status.textContent = 'Cargando...');
-        player.addEventListener('playing', () => status.textContent = '🎵 Live - Conectado');
-        player.addEventListener('pause', () => status.textContent = 'Pausado');
-        player.addEventListener('error', () => {
-          status.textContent = '❌ Error - Reintentando...';
-          reconnect();
-        });
-        player.addEventListener('ended', reconnect); // Streams loop
        
         function reconnect() {
           clearInterval(reconnectInterval);
