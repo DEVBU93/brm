@@ -976,7 +976,6 @@
           '17tBnQjFjIkfaZD6-tqdOwzimvJ_KCNvh',  
           '1Kx_s6VetzCrZTI6bYJr-NiAfYAOORZr7',
         ];
-        function thumb(id,sz){return`https://drive.google.com/thumbnail?id=${id}&sz=w${sz||333}`}
          // Indica qué IDs son vídeo
         const VIDEO_IDS = new Set([
           '1oSf0bwjQKunCvlOh6xVad2CgzEItW5bh',
@@ -990,20 +989,20 @@
           '17tBnQjFjIkfaZD6-tqdOwzimvJ_KCNvh',  
           '1Kx_s6VetzCrZTI6bYJr-NiAfYAOORZr7',
         ]);
-        
+        function thumb(id,sz){return`https://drive.google.com/thumbnail?id=${id}&sz=w${sz||333}`}
+            
         function drivePreview(id){
           return `https://drive.google.com/file/d/${id}/preview`;
         }
         // BUILD ARTWORK CAROUSEL
-        IMG_IDS.forEach((id,i)=>{
         const wrap=document.getElementById('artworkWrap');
         const dots=document.getElementById('artDots');
-        const isVideo = VIDEO_IDS.has(id);
-        const slide=document.createElement('div');
-        const imgEl = slide.querySelector('img');
-        const dot=document.createElement('button');
-
+        
+        IMG_IDS.forEach((id,i)=>{
+          const slide=document.createElement('div');
           slide.className='artwork-slide'+(i===0?' active':'');
+          const isVideo = VIDEO_IDS.has(id);
+        
           slide.innerHTML=`
             <img
               src="${thumb(id,800)}"
@@ -1011,38 +1010,40 @@
               loading="${i===0?'eager':'lazy'}"
               data-id="${id}"
               data-video="${isVideo ? '1' : '0'}"
-            >`;
+            >
+          `;
+        
           wrap.insertBefore(slide,wrap.querySelector('.artwork-overlay'));
-
+        
+          const dot=document.createElement('button');
           if(i===0)dot.className='active';
           dot.addEventListener('click',()=>goSlide(i));
           dots.appendChild(dot);
         });
-
+        
+        // VIDEO THUMB sigue igual (miniatura)
+        document.getElementById('videoThumb').src=thumb(IMG_IDS[0],600);
+        
         let curSlide=0;
         function goSlide(n){
-          document.querySelectorAll('.artwork-slide')[curSlide].classList.remove('active');
-          document.querySelectorAll('#artDots button')[curSlide].classList.remove('active');
+          const slides = document.querySelectorAll('.artwork-slide');
+          const dotBtns = document.querySelectorAll('#artDots button');
+        
+          slides[curSlide].classList.remove('active');
+          dotBtns[curSlide].classList.remove('active');
+        
           curSlide=n;
-          document.querySelectorAll('.artwork-slide')[curSlide].classList.add('active');
-          document.querySelectorAll('#artDots button')[curSlide].classList.add('active');
+        
+          slides[curSlide].classList.add('active');
+          dotBtns[curSlide].classList.add('active');
+        
           // Sync now-playing
           const t=TRACKS[Math.floor(Math.random()*TRACKS.length)];
           document.getElementById('npTitle').textContent=t.t;
           document.getElementById('npNum').textContent=`#${t.n} · BUBATRONIK_BRM RADIO`;
           document.getElementById('videoThumb').src=thumb(IMG_IDS[curSlide],600);
-        // VIDEO THUMB
-          document.getElementById('videoThumb').src=thumb(IMG_IDS[0],600);
-          if (isVideo) {
-          imgEl.style.cursor = 'pointer';
-          imgEl.addEventListener('click', ()=>{
-          // Aquí reutilizas tu zona de vídeo existente
-          const frame = document.getElementById('videoFrame');
-          frame.src = drivePreview(id);
-          });
-          }
         
-          // si el slide actual es vídeo, cargarlo en el iframe
+          // NUEVO: si el slide actual es vídeo, cargarlo en el iframe
           const id = IMG_IDS[curSlide];
           if (VIDEO_IDS.has(id)) {
             const frame = document.getElementById('videoFrame');
@@ -1056,9 +1057,10 @@
               frame.src = '';
             }
           }
+        }
+        
         setInterval(()=>goSlide((curSlide+1)%IMG_IDS.length),6000);
-        if(frame) frame.src = VIDEO_IDS.has(IMG_IDS[curSlide]) ? drivePreview(IMG_IDS[curSlide]) : '';
-        } 
+        
         // MINI GRID
         const mg=document.getElementById('miniGrid');
         IMG_IDS.forEach((id,i)=>{
