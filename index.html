@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BUBATRONIK_BRM RADIO | Techno Live desde Tarragona | Open Format Radio">
+    <meta name="description" content="BUBATRONIK_BRM RADIO | Techno Live desde Tarragona | Streaming en Vivo">
     <meta name="theme-color" content="#f59e0b">
-    <title>🔊 BUBATRONIK_BRM RADIO | ON AIR 🛰️</title>
+    <title>🔊 BUBATRONIK_BRM RADIO | STREAMING EN VIVO 🛰️</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;600&family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -19,10 +19,10 @@
             --amber2: #fbbf24;
             --amber3: #fde68a;
             --red: #ef4444;
+            --green: #10b981;
             --white: #f0ede8;
             --muted: #8a8a9a;
             --border: #2a2a38;
-            --green: #10b981;
         }
         
         html { scroll-behavior: smooth; }
@@ -156,6 +156,17 @@
             box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
         }
         
+        .onair-dot.offline {
+            border-color: var(--muted);
+            box-shadow: 0 0 10px rgba(138, 138, 154, 0.3);
+            animation: none;
+        }
+        
+        .onair-dot.offline::before,
+        .onair-dot.offline::after {
+            display: none;
+        }
+        
         .onair-dot::before {
             content: '';
             position: absolute;
@@ -192,6 +203,11 @@
             font-weight: bold;
         }
         
+        .onair-inner.offline {
+            background: var(--muted);
+            animation: none;
+        }
+        
         @keyframes pulse-ring {
             0% { transform: scale(1); opacity: 0.6; }
             100% { transform: scale(1.3); opacity: 0; }
@@ -208,6 +224,10 @@
             color: var(--red);
             font-weight: 700;
             text-transform: uppercase;
+        }
+        
+        .onair-label.offline {
+            color: var(--muted);
         }
         
         .station-freq {
@@ -356,32 +376,25 @@
             50% { box-shadow: 0 0 50px rgba(245, 158, 11, 0.8); }
         }
         
-        .time-display {
-            font-size: 11px;
-            color: var(--muted);
-            letter-spacing: 1px;
-            font-weight: 600;
-            width: 100px;
-            text-align: center;
-        }
-        
-        .progress-bar {
+        .btn-native {
             width: 100%;
-            height: 6px;
-            background: var(--border);
-            border-radius: 3px;
-            overflow: hidden;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--green), #059669);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
             cursor: pointer;
-            margin-bottom: 8px;
-            position: relative;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-family: 'Bebas Neue', sans-serif;
         }
         
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--amber), var(--amber2));
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.1s linear;
+        .btn-native:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
         }
         
         .volume-control {
@@ -623,6 +636,26 @@
             font-weight: 600;
             text-align: right;
             max-width: 65%;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--red);
+            margin-right: 6px;
+            animation: blink 1s step-start infinite;
+        }
+        
+        .status-indicator.offline {
+            background: var(--muted);
+            animation: none;
+        }
+        
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0.3; }
         }
         
         /* GENRE TAGS */
@@ -903,10 +936,10 @@
             </div>
             
             <div class="onair-badge">
-                <div class="onair-dot">
-                    <div class="onair-inner">ON AIR</div>
+                <div class="onair-dot" id="onairDot">
+                    <div class="onair-inner" id="onairInner">ON AIR</div>
                 </div>
-                <div class="onair-label">▶ EMITIENDO EN VIVO</div>
+                <div class="onair-label" id="onairLabel">▶ EMITIENDO EN VIVO</div>
             </div>
             
             <div class="station-freq">
@@ -924,42 +957,26 @@
                 <div class="player-section">
                     <div class="now-playing">
                         <div class="now-playing-label">▶ SONANDO AHORA</div>
-                        <div class="now-playing-title" id="npTitle">Conectando stream...</div>
-                        <div class="now-playing-artist" id="npArtist">BUBATRONIK_BRM RADIO</div>
+                        <div class="now-playing-title" id="npTitle">BUBATRONIK_BRM EN VIVO</div>
+                        <div class="now-playing-artist" id="npArtist">Streaming en directo desde Tarragona</div>
                     </div>
                     
                     <div class="audio-player-wrap">
-                        <!-- Audio Element - STREAMING EN VIVO -->
+                        <!-- Audio Element - SHOUTCAST STREAMING -->
                         <audio id="audioPlayer" controls style="width: 100%; margin-bottom: 15px;">
-                            <source src="https://bubatronik.radiostream321.com/" type="audio/mpeg">
+                            <source src="http://uk4freenew.listen2myradio.com:25771/;" type="audio/mpeg">
+                            Tu navegador no soporta audio HTML5
                         </audio>
                         
                         <!-- Controls -->
                         <div class="player-controls">
-                            <button class="btn-control" id="btnPrev" title="Anterior">⏮</button>
-                            <button class="btn-control play-btn" id="btnPlay" title="Reproducir/Pausar">▶</button>
-                            <button class="btn-control" id="btnNext" title="Siguiente">⏭</button>
+                            <button class="btn-control" id="btnPlay" title="Reproducir/Pausar">▶</button>
                         </div>
                         
-                        <!-- Progress -->
-                        <div class="progress-bar" id="progressBar">
-                            <div class="progress-bar-fill" id="progressBarFill"></div>
-                        </div>
-                        
-                        <!-- Time -->
-                        <div style="display: flex; justify-content: space-between; font-size: 9px; color: var(--muted); letter-spacing: 1px; margin-bottom: 10px;">
-                            <span id="currentTime">0:00</span>
-                            <span id="duration">∞ CONTINUOUS LIVE</span>
-                        </div>
-                        
-                        <!-- Volume -->
-                        <div class="volume-control">
-                            <span style="font-size: 9px; color: var(--muted);">🔊</span>
-                            <div class="volume-slider" id="volumeSlider">
-                                <div class="volume-slider-fill" id="volumeSliderFill"></div>
-                            </div>
-                            <span class="volume-label" id="volumeLabel">100%</span>
-                        </div>
+                        <!-- Botón Web Nativa -->
+                        <button class="btn-native" onclick="window.open('http://uk4freenew.listen2myradio.com:25771', '_blank')">
+                            🌐 Escuchar en Web Nativa
+                        </button>
                     </div>
                 </div>
                 
@@ -975,8 +992,8 @@
                         <div class="waveform-bar"></div>
                     </div>
                     <div class="track-counter">
-                        TRACKS EN ROTACIÓN
-                        <strong id="trackCount">1822+</strong>
+                        STREAMING LIVE
+                        <strong id="trackCount">24/7</strong>
                     </div>
                 </div>
                 
@@ -995,28 +1012,28 @@
                 <!-- STATION INFO -->
                 <div class="station-info">
                     <div class="info-row">
-                        <span class="info-label">ESTACIÓN</span>
-                        <span class="info-val">BUBATRONIK_BRM</span>
+                        <span class="info-label">ESTADO</span>
+                        <span class="info-val"><span class="status-indicator" id="statusDot"></span><span id="statusText">Verificando...</span></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">SERVIDOR</span>
+                        <span class="info-val">Shoutcast1 MIXX</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">BITRATE</span>
+                        <span class="info-val">128 kbps MP3</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">FORMATO</span>
                         <span class="info-val">OPEN FORMAT</span>
                     </div>
                     <div class="info-row">
-                        <span class="info-label">CURADOR</span>
-                        <span class="info-val">RUBÉN RODRÍGUEZ</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">PLATAFORMA</span>
-                        <span class="info-val">WORLDMOS</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">SEÑAL</span>
-                        <span class="info-val" style="color: var(--green);">●●●●● FUERTE</span>
-                    </div>
-                    <div class="info-row">
                         <span class="info-label">UBICACIÓN</span>
                         <span class="info-val">📍 Tarragona, ES</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">LISTENERS</span>
+                        <span class="info-val" id="listenerCount">0</span>
                     </div>
                 </div>
                 
@@ -1087,7 +1104,7 @@
             <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                 <a href="mailto:rubenrodriguez.f.93@gmail.com" title="Email">📧 EMAIL</a>
                 <a href="https://www.instagram.com/bubatronik_brm/" target="_blank" title="Instagram">🚀 INSTAGRAM</a>
-                <a href="https://bubatronik.radiostream321.com/" target="_blank" title="Listen Stream">🌐 STREAM</a>
+                <a href="http://uk4freenew.listen2myradio.com:25771/" target="_blank" title="Listen Stream">🌐 STREAM DIRECTO</a>
                 <a href="https://drive.google.com/drive/folders/1XjSOxAVIAXA3R6qkOi3Uv_5rSdG5rLO0" target="_blank" title="Google Drive">💾 DRIVE</a>
             </div>
             <div>LOB@-PULPO × DEVBU93 · © 2026 · ¡AUUUAUUU!</div>
@@ -1095,24 +1112,24 @@
     </div>
     
     <script>
-        // ========== TRACKS DATABASE - TODOS LOS TRACKS RECUPERADOS ==========
+        // ========== TRACKS DATABASE - TODOS LOS TRACKS ==========
         const TRACKS = [
             {n:'CARLOS VECINO',t:'Carlos Vecino — Tema especial BRM Radio ★',artist:'Carlos Vecino'},
             {n:'200',t:'Xican — Nueva Tierra',artist:'Xican'},
-            {n:'199',t:'Pop Smoke ft Khaligraph Jones, Central Cee, ArrDee, Stormzy — SHWATY',artist:'Pop Smoke & Guests'},
-            {n:'198',t:'ZHU — One Minute To Midnight (Addictive Deep Afro House)',artist:'ZHU'},
-            {n:'197',t:'G-HUN — BABA YAGA (Official Music Video)',artist:'G-HUN'},
-            {n:'196',t:'In Da Club — Old Soul Version (1950s)',artist:'50 Cent Old Soul Cover'},
-            {n:'195',t:'BOVSKI, PET3RPUNX, LUCKY DEMON — SCARS TO YOUR BEAUTIFUL (HyperTechno)',artist:'BOVSKI & Co.'},
-            {n:'194',t:'EMMY — Dancing All Alone (BOVSKI Remix)',artist:'EMMY / BOVSKI'},
+            {n:'199',t:'Pop Smoke ft Khaligraph Jones — SHWATY',artist:'Pop Smoke & Guests'},
+            {n:'198',t:'ZHU — One Minute To Midnight (Deep Afro House)',artist:'ZHU'},
+            {n:'197',t:'G-HUN — BABA YAGA',artist:'G-HUN'},
+            {n:'196',t:'In Da Club — Old Soul Version (1950s)',artist:'50 Cent Cover'},
+            {n:'195',t:'BOVSKI, PET3RPUNX — SCARS (HyperTechno)',artist:'BOVSKI & Co.'},
+            {n:'194',t:'EMMY — Dancing All Alone (BOVSKI Remix)',artist:'EMMY'},
             {n:'193',t:'WILD',artist:'Desconocido'},
             {n:'192',t:'Vive Hoy — Pop Emocional',artist:'Pop Emocional AI'},
-            {n:'191',t:'Marwán & Nach — 5 Gramos de Resentimiento ft. El Kanka',artist:'Marwán · Nach · El Kanka'},
-            {n:'190',t:'BLAKE ft. Al2 El Aldeano — GOD SCHOOL #TALISMÁN',artist:'BLAKE · Al2 El Aldeano'},
-            {n:'189',t:'Madre — Soul Emocional',artist:'Soul Emocional AI'},
+            {n:'191',t:'Marwán & Nach — 5 Gramos de Resentimiento',artist:'Marwán · Nach · El Kanka'},
+            {n:'190',t:'BLAKE ft. Al2 El Aldeano — GOD SCHOOL',artist:'BLAKE · Al2'},
+            {n:'189',t:'Madre — Soul Emocional',artist:'Soul AI'},
             {n:'188',t:'Antoine Clamaran — Gold',artist:'Antoine Clamaran'},
             {n:'187',t:'Avicii — For A Better Day',artist:'Avicii'},
-            {n:'186',t:'Fritz & Paul Kalkbrenner — Sky and Sand (Original Mix)',artist:'Fritz & Paul Kalkbrenner'},
+            {n:'186',t:'Fritz & Paul Kalkbrenner — Sky and Sand',artist:'Fritz & Paul K'},
             {n:'185',t:'Robin Schulz — Sugar ft. Francesco Yates',artist:'Robin Schulz'},
             {n:'184',t:'DJs From Mars — Avicii Tribute Megamashup',artist:'DJs From Mars'},
             {n:'183',t:'KASE.O — SALUD Y LIBERTAD ft. FOYONE',artist:'KASE.O · FOYONE'},
@@ -1122,52 +1139,94 @@
             {n:'179',t:'Eiffel 65 — Blue (Da Ba Dee)',artist:'Eiffel 65'},
             {n:'178',t:'Culture Beat — Mr. Vain',artist:'Culture Beat'},
             {n:'177',t:'Snap! — Rhythm is a Dancer',artist:'Snap!'},
-            {n:'176',t:'Rnbstylerz — Like Wooh Wooh (TikTok Remix)',artist:'Rnbstylerz'},
+            {n:'176',t:'Rnbstylerz — Like Wooh Wooh (Remix)',artist:'Rnbstylerz'},
             {n:'175',t:'Solitario — Barra libre de barras',artist:'Solitario'},
             {n:'174',t:'Mägo de Oz — Hasta Que El Cuerpo Aguante',artist:'Mägo de Oz'},
             {n:'173',t:'El Vals del Obrero',artist:'Anónimo'},
             {n:'172',t:'Paseo',artist:'Desconocido'},
             {n:'171',t:'Fito & Fitipaldis — La casa por el tejado',artist:'Fito & Fitipaldis'},
             {n:'170',t:'Matador — Los Fabulosos Cadillacs',artist:'Los Fabulosos Cadillacs'},
-            {n:'169',t:'Hablaron de mí — Woundsmusic (Soul inspirador)',artist:'Woundsmusic'},
+            {n:'169',t:'Hablaron de mí — Woundsmusic',artist:'Woundsmusic'},
             {n:'168',t:'Lo Aprendí de Tu Frío — Soul',artist:'Soul AI'},
-            {n:'167',t:'PAPÁ — Loba Negra (rap íntimo en español)',artist:'Loba Negra'},
-            {n:'166',t:'NO ES PARA MENTES PEQUEÑAS — BLUES OSCURO',artist:'Blues Oscuro AI'},
-            {n:'165',t:'TOTEKING — Ni de Ellos ni de Ellas (Funk Soul AI)',artist:'TOTEKING'},
-            {n:'164',t:'KASE.O & CAPAZ — Pan caliente (Motown Soul 1950)',artist:'KASE.O · CAPAZ'},
+            {n:'167',t:'PAPÁ — Loba Negra',artist:'Loba Negra'},
+            {n:'166',t:'NO ES PARA MENTES PEQUEÑAS — BLUES',artist:'Blues Oscuro AI'},
+            {n:'165',t:'TOTEKING — Ni de Ellos ni de Ellas',artist:'TOTEKING'},
+            {n:'164',t:'KASE.O & CAPAZ — Pan caliente',artist:'KASE.O · CAPAZ'},
             {n:'163',t:'SFDK — Esclavos (Neo Soul Cover)',artist:'SFDK'},
             {n:'162',t:'Macaco — Atreverse a Vivir',artist:'Macaco'},
             {n:'161',t:'Mina\'s Radio — EP. 003',artist:"Mina's Radio"},
-            {n:'160',t:'Vengaboys — Boom, Boom, Boom, Boom!! (Hardstyle Bootleg)',artist:'Vengaboys / Actraiser'},
-            {n:'159',t:'TRIFUNOX — TIKI TIKI (TOP CAR MIX 2026)',artist:'TRIFUNOX'},
-            {n:'158',t:'Reel 2 Real — I Like To Move It (CLUB REMIX 2026)',artist:'Reel 2 Real'},
-            {n:'157',t:'KULTØ — Darbuka Pulse (Drum Tribal Techno 124 BPM)',artist:'KULTØ'},
+            {n:'160',t:'Vengaboys — Boom Boom Boom!! (Hardstyle)',artist:'Vengaboys'},
+            {n:'159',t:'TRIFUNOX — TIKI TIKI (TOP CAR MIX)',artist:'TRIFUNOX'},
+            {n:'158',t:'Reel 2 Real — I Like To Move It (REMIX)',artist:'Reel 2 Real'},
+            {n:'157',t:'KULTØ — Darbuka Pulse (Drum Tribal)',artist:'KULTØ'},
             {n:'156',t:'Mr. Lonely — 1950\'s Soul Version',artist:'Old Soul AI'},
-            {n:'155',t:'Wu Tang Clan — Protect Ya Neck / C.R.E.A.M. / Triumph',artist:'Wu Tang Clan'},
-            {n:'154',t:'Black Pumas — Colors (Live at Abbey Road)',artist:'Black Pumas'},
+            {n:'155',t:'Wu Tang Clan — Protect Ya Neck / C.R.E.A.M',artist:'Wu Tang Clan'},
+            {n:'154',t:'Black Pumas — Colors (Live Abbey Road)',artist:'Black Pumas'},
             {n:'153',t:'FKJ & Masego — Tadow',artist:'FKJ · Masego'},
-            {n:'152',t:'Delinquent Habits — CALIFORNIA ft. Sen Dog (Cypress Hill)',artist:'Delinquent Habits'},
-            {n:'151',t:'... y 100 tracks más en tu colección completa BUBATRONIK',artist:'BUBATRONIK COLLECTION'},
+            {n:'152',t:'Delinquent Habits — CALIFORNIA',artist:'Delinquent Habits'},
+            {n:'151',t:'... y 100+ tracks más en tu colección',artist:'BUBATRONIK COLLECTION'},
         ];
         
-        // ========== STATE ==========
-        let currentTrackIndex = 0;
+        // ========== SHOUTCAST STATUS CHECK ==========
+        const SHOUTCAST_URL = 'http://uk4freenew.listen2myradio.com:25771';
+        const SHOUTCAST_STATS = 'http://uk4freenew.listen2myradio.com:25771/stats?json=1';
         
-        // ========== DOM ELEMENTS ==========
-        const audioPlayer = document.getElementById('audioPlayer');
-        const btnPlay = document.getElementById('btnPlay');
-        const btnNext = document.getElementById('btnNext');
-        const btnPrev = document.getElementById('btnPrev');
-        const npTitle = document.getElementById('npTitle');
-        const npArtist = document.getElementById('npArtist');
-        const playlistScroll = document.getElementById('playlistScroll');
-        const ticker = document.getElementById('ticker');
-        const clock = document.getElementById('clock');
+        function checkStreamStatus() {
+            // Usar CORS proxy si es necesario
+            const corsProxy = 'https://corsproxy.io/?';
+            
+            fetch(corsProxy + encodeURIComponent(SHOUTCAST_STATS))
+                .then(response => response.json())
+                .then(data => {
+                    updateStreamStatus(true, data);
+                })
+                .catch(() => {
+                    // Si falla, intentar método alternativo
+                    fetch(SHOUTCAST_URL, { method: 'HEAD', mode: 'no-cors' })
+                        .then(() => updateStreamStatus(true, null))
+                        .catch(() => updateStreamStatus(false, null));
+                });
+        }
+        
+        function updateStreamStatus(isOnline, data) {
+            const onairDot = document.getElementById('onairDot');
+            const onairInner = document.getElementById('onairInner');
+            const onairLabel = document.getElementById('onairLabel');
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const listenerCount = document.getElementById('listenerCount');
+            
+            if (isOnline) {
+                // EMITIENDO
+                onairDot.classList.remove('offline');
+                onairInner.classList.remove('offline');
+                onairLabel.classList.remove('offline');
+                statusDot.classList.remove('offline');
+                
+                onairLabel.textContent = '▶ EMITIENDO EN VIVO';
+                statusText.textContent = 'EN VIVO';
+                
+                if (data && data.stationlisteners) {
+                    listenerCount.textContent = data.stationlisteners;
+                }
+            } else {
+                // OFFLINE
+                onairDot.classList.add('offline');
+                onairInner.classList.add('offline');
+                onairLabel.classList.add('offline');
+                statusDot.classList.add('offline');
+                
+                onairInner.textContent = 'OFFLINE';
+                onairLabel.textContent = '⏸ NO EMITIENDO';
+                statusText.textContent = 'OFFLINE';
+                listenerCount.textContent = '0';
+            }
+        }
         
         // ========== INIT FUNCTIONS ==========
         function initTicker() {
             const tickerText = '🎵 BUBATRONIK_BRM ON AIR · OPEN FORMAT RADIO · 🎵 BUBATRONIK_BRM ON AIR · OPEN FORMAT RADIO · 🎵 BUBATRONIK_BRM ON AIR · OPEN FORMAT RADIO · ';
-            ticker.innerHTML = tickerText + tickerText;
+            document.getElementById('ticker').innerHTML = tickerText + tickerText;
         }
         
         function initClock() {
@@ -1178,18 +1237,19 @@
                 const day = String(now.getDate()).padStart(2, '0');
                 const month = String(now.getMonth() + 1).padStart(2, '0');
                 const year = now.getFullYear();
-                clock.textContent = `${hours}:${mins} · ${day}/${month}/${year}`;
+                document.getElementById('clock').textContent = `${hours}:${mins} · ${day}/${month}/${year}`;
             }
             updateClock();
             setInterval(updateClock, 1000);
         }
         
         function renderPlaylist() {
+            const playlistScroll = document.getElementById('playlistScroll');
             playlistScroll.innerHTML = '';
+            
             TRACKS.forEach((track, index) => {
                 const trackRow = document.createElement('div');
                 trackRow.className = 'track-row';
-                if (index === currentTrackIndex) trackRow.classList.add('playing');
                 
                 trackRow.innerHTML = `
                     <div class="track-num">${track.n}</div>
@@ -1201,31 +1261,18 @@
                 `;
                 
                 trackRow.addEventListener('click', () => {
-                    currentTrackIndex = index;
-                    updatePlayingTrack();
+                    document.getElementById('npTitle').textContent = track.t;
+                    document.getElementById('npArtist').textContent = track.artist;
                 });
                 
                 playlistScroll.appendChild(trackRow);
             });
         }
         
-        function updatePlayingTrack() {
-            const track = TRACKS[currentTrackIndex];
-            npTitle.textContent = track.t;
-            npArtist.textContent = track.artist;
-            
-            // Actualizar UI
-            document.querySelectorAll('.track-row').forEach((row, index) => {
-                if (index === currentTrackIndex) {
-                    row.classList.add('playing');
-                    row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                } else {
-                    row.classList.remove('playing');
-                }
-            });
-        }
+        // ========== AUDIO CONTROLS ==========
+        const audioPlayer = document.getElementById('audioPlayer');
+        const btnPlay = document.getElementById('btnPlay');
         
-        // ========== AUDIO EVENTS ==========
         audioPlayer.addEventListener('play', () => {
             btnPlay.classList.add('playing');
             btnPlay.textContent = '⏸';
@@ -1236,7 +1283,6 @@
             btnPlay.textContent = '▶';
         });
         
-        // ========== CONTROLS ==========
         btnPlay.addEventListener('click', () => {
             if (audioPlayer.paused) {
                 audioPlayer.play();
@@ -1245,21 +1291,14 @@
             }
         });
         
-        btnNext.addEventListener('click', () => {
-            currentTrackIndex = (currentTrackIndex + 1) % TRACKS.length;
-            updatePlayingTrack();
-        });
-        
-        btnPrev.addEventListener('click', () => {
-            currentTrackIndex = (currentTrackIndex - 1 + TRACKS.length) % TRACKS.length;
-            updatePlayingTrack();
-        });
-        
-        // ========== INIT ==========
+        // ========== INIT ALL ==========
         initTicker();
         initClock();
         renderPlaylist();
-        updatePlayingTrack();
+        
+        // Verificar estado cada 30 segundos
+        checkStreamStatus();
+        setInterval(checkStreamStatus, 30000);
     </script>
 </body>
 </html>
