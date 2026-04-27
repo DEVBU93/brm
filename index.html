@@ -1309,16 +1309,14 @@
             <canvas id="vizCanvas"></canvas>
 
             <!-- 
-              STREAM URLS — orden por prioridad HTTPS:
-              1. radiostream321 HTTPS (stream endpoint estándar)
-              2. radiostream321 HTTPS (formato ;stream.mp3 Shoutcast v1)
-              3. radiostream321 HTTPS (raíz con ICY)
-              El HTTP de listen2myradio está BLOQUEADO en páginas HTTPS — no usar.
+              STREAM via Cloudflare Worker HTTPS proxy
+              Worker: https://brm.rubenrodriguez-f-93.workers.dev/
+              Orquestador: Rubén Rodríguez Francisco · DEVBU93
             -->
             <audio id="audioPlayer" preload="none">
+              <source src="https://brm.rubenrodriguez-f-93.workers.dev/stream" type="audio/mpeg">
+              <source src="https://brm.rubenrodriguez-f-93.workers.dev/" type="audio/mpeg">
               <source src="https://bubatronik.radiostream321.com/stream" type="audio/mpeg">
-              <source src="https://bubatronik.radiostream321.com/;stream.mp3" type="audio/mpeg">
-              <source src="https://bubatronik.radiostream321.com/;" type="audio/mpeg">
             </audio>
 
             <div class="controls-row">
@@ -1855,12 +1853,10 @@
 
   // ── STREAM FALLBACK CHAIN ─────────────────────────────────
   const STREAM_URLS = [
-    // ✅ OPCIÓN A: Cloudflare Worker proxy (reemplaza TU-CUENTA por tu subdomain de workers.dev)
-    // 'https://brm-stream-proxy.TU-CUENTA.workers.dev/stream',
-    // ✅ OPCIÓN B: radiostream321 HTTPS directo (prueba cuál funciona)
-    'https://bubatronik.radiostream321.com/stream',
-    'https://bubatronik.radiostream321.com/;stream.mp3',
-    'https://bubatronik.radiostream321.com/;',
+    'https://brm.rubenrodriguez-f-93.workers.dev/stream',   // ✅ CF Worker HTTPS — PRINCIPAL
+    'https://brm.rubenrodriguez-f-93.workers.dev/',          // ✅ CF Worker HTTPS — fallback raíz
+    'https://bubatronik.radiostream321.com/stream',          // fallback directo
+    'https://bubatronik.radiostream321.com/;stream.mp3',     // fallback Shoutcast v1
   ];
   let streamAttempt = 0;
 
